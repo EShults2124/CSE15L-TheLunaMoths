@@ -16,7 +16,6 @@ public class MarkdownParse {
 			System.out.println("Current Index: " + currentIndex);
 
 			int nextOpenBracket = markdown.indexOf("[", currentIndex);
-
 			int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
 			int openParen = markdown.indexOf("(", nextCloseBracket);
 			int closeParen = markdown.indexOf(")", openParen);
@@ -26,8 +25,8 @@ public class MarkdownParse {
 		}
 		
 			if (nextCloseBracket + 1 == openParen) {
-				if (nextOpenBracket == 0 ||
-					!(markdown.charAt(nextOpenBracket - 1) == '!')) {
+				if ((nextOpenBracket == 0 || !(markdown.charAt(nextOpenBracket - 1) == '!'))
+				    && markdown.substring(openParen + 1, closeParen).indexOf(" ") == -1) {
 					toReturn.add(markdown.substring(openParen + 1, closeParen));
 				}
 			}
