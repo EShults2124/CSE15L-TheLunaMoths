@@ -34,7 +34,7 @@ public class MarkdownParseTest {
 		ArrayList<String> links = MarkdownParse.getLinks(contents);
 		assertEquals(List.of("https://validlink.com"), links);
 	}
-	
+
 	@Test
 	public void testFile4() throws IOException {
 		Path fileName = Path.of("test-file4.md");
@@ -74,4 +74,57 @@ public class MarkdownParseTest {
 		ArrayList<String> links = MarkdownParse.getLinks(contents);
 		assertEquals(new ArrayList<String>(), links);
 	}
+
+	@Test
+	public void testSnippet1() throws IOException {
+
+		String testingFile = "SnippetOne.md";
+
+		Path fileName = Path.of(testingFile);
+		String contents = Files.readString(fileName);
+		ArrayList<String> validLinks = MarkdownParse.getLinks(contents);
+
+		ArrayList<String> test = new ArrayList<>();
+		test.add("`google.com");
+		test.add("google.com");
+		test.add("ucsd.edu");
+
+		assertTrue(test.equals(validLinks));
+
+	}
+
+	@Test
+	public void testSnippet2() throws IOException {
+
+		String testingFile = "SnippetTwo.md";
+
+		Path fileName = Path.of(testingFile);
+		String contents = Files.readString(fileName);
+		ArrayList<String> validLinks = MarkdownParse.getLinks(contents);
+
+		ArrayList<String> test = new ArrayList<>();
+		test.add("a.com");
+		test.add("a.com(())");
+		test.add("example.com");
+
+		assertTrue(test.equals(validLinks));
+
+	}
+
+	@Test
+	public void testSnippet3() throws IOException {
+
+		String testingFile = "SnippetThree.md";
+
+		Path fileName = Path.of(testingFile);
+		String contents = Files.readString(fileName);
+		ArrayList<String> validLinks = MarkdownParse.getLinks(contents);
+
+		ArrayList<String> test = new ArrayList<>();
+		test.add("https://ucsd-cse15l-w22.github.io/");
+
+		assertTrue(test.equals(validLinks));
+
+	}
+
 }
